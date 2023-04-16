@@ -22,16 +22,16 @@ public class StatController {
 
     @PostMapping("/hit")
     @ResponseStatus(HttpStatus.CREATED)
-    public void addHit (@RequestBody DtoHitIn dtoHitIn) {
+    public void addHit(@RequestBody DtoHitIn dtoHitIn) {
         log.info("Информация сохранена {}", dtoHitIn);
         statService.addHit(dtoHitIn);
     }
 
     @GetMapping("/stats")
-    public List<DtoStatOut> getStats (@RequestParam @DateTimeFormat(pattern = DATA_TIME_FORMAT) LocalDateTime start,
-                                @RequestParam @DateTimeFormat(pattern = DATA_TIME_FORMAT) LocalDateTime end,
-                                @RequestParam(required = false) List<String> uris,
-                                @RequestParam(defaultValue = "false") Boolean unique) {
+    public List<DtoStatOut> getStats(@RequestParam @DateTimeFormat(pattern = DATA_TIME_FORMAT) LocalDateTime start,
+                                     @RequestParam @DateTimeFormat(pattern = DATA_TIME_FORMAT) LocalDateTime end,
+                                     @RequestParam(required = false) List<String> uris,
+                                     @RequestParam(defaultValue = "false") Boolean unique) {
         log.info("Получение статистики: start {}, end {}", start, end);
         return statService.getStats(start, end, uris, unique);
     }
