@@ -1,9 +1,6 @@
-package ru.practicum.model;
+package ru.practicum.server.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -14,6 +11,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Entity
 @Table(name = "hits")
+@Builder
 public class Hit {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,11 +20,4 @@ public class Hit {
     private String uri;
     private String ip;
     private LocalDateTime timestamp;
-
-    public Hit(String app, String uri, String ip, LocalDateTime timestamp) {
-        this.app = app;
-        this.uri = uri;
-        this.ip = ip;
-        this.timestamp = timestamp;
-    }
 }

@@ -1,4 +1,4 @@
-package ru.practicum.service;
+package ru.practicum.server.service;
 
 import ru.practicum.dto.DtoHitIn;
 import ru.practicum.dto.DtoStatOut;

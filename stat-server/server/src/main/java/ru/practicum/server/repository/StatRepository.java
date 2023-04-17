@@ -1,15 +1,13 @@
-package ru.practicum.repository;
+package ru.practicum.server.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.stereotype.Repository;
 import ru.practicum.dto.DtoStatOut;
-import ru.practicum.model.Hit;
+import ru.practicum.server.model.Hit;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Repository
 public interface StatRepository extends JpaRepository<Hit, Long> {
     @Query("SELECT new ru.practicum.dto.DtoStatOut(h.app, h.uri, COUNT(DISTINCT h.ip)) " +
             "FROM Hit h " +

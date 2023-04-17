@@ -1,27 +1,25 @@
 package ru.practicum.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
-
-import static ru.practicum.dto.DataTimePattern.DATA_TIME_FORMAT;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class DtoHitIn {
-    @NonNull
+    @NotBlank
     private String app;
-    @NonNull
+    @NotBlank
     private String uri;
-    @NonNull
+    @NotBlank
     private String ip;
     @NotNull
-    @JsonFormat(pattern = DATA_TIME_FORMAT)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime timestamp;
 }
