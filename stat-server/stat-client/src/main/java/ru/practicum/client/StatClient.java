@@ -34,9 +34,7 @@ public class StatClient extends BaseClient {
         return post("/hit", dtoHitIn);
     }
 
-    public ResponseEntity<Object> getStatsEndpoint
-            (LocalDateTime start, LocalDateTime end, List<String> uris, Boolean unique) {
-
+    public ResponseEntity<Object> getStatsEndpoint(LocalDateTime start, LocalDateTime end, List<String> uris, Boolean unique) {
         Map<String, Object> parameters = Map.of(
                 "start", start.format(DATA_TIME_FORMAT),
                 "end", end.format(DATA_TIME_FORMAT),
