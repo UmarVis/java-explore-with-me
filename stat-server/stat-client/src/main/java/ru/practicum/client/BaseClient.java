@@ -6,6 +6,7 @@ import org.springframework.lang.Nullable;
 import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestTemplate;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -25,6 +26,18 @@ public class BaseClient {
         }
 
         return responseBuilder.build();
+    }
+
+    protected ResponseEntity<Object> get(String path, LocalDateTime start, LocalDateTime end, List<String> uris, Boolean unique) {
+        Map<String, Object> parameters = Map.of("start", start,
+                "end", end,
+                "uris", uris,
+                "unique", unique);
+        return get(path, parameters);
+    }
+
+    protected ResponseEntity<Object> get(String path, @Nullable Map<String, Object> parameters) {
+        return makeAndSendRequest(HttpMethod.GET, path, parameters, null);
     }
 
     protected <T> ResponseEntity<Object> post(String path, T body) {
