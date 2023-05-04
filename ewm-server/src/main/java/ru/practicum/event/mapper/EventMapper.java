@@ -70,7 +70,7 @@ public class EventMapper {
                 .build();
     }
 
-    public static Set<EventDto> MakeSetEventDto(Set<Event> events) {
+    public static Set<EventDto> makeSetEventDto(Set<Event> events) {
         return events.stream().map(EventMapper::makeEventDto).collect(Collectors.toSet());
     }
 

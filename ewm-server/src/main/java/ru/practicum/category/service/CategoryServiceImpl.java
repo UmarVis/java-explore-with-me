@@ -62,7 +62,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public List<CategoryDto> getAll(int from, int size) {
         log.info("Получения всех ктегорий постранично {} и {}", from, size);
-        Pageable pageable = PageRequest.of(from/size, size, SORT_BY_ASC);
+        Pageable pageable = PageRequest.of(from / size, size, SORT_BY_ASC);
         Page<Category> page = categoryRepository.findAll(pageable);
         return CategoryMapper.makeCategoryDtoList(page);
     }

@@ -24,7 +24,7 @@ public class CompilationMapper {
         return CompilationDto.builder()
                 .id(compilation.getId())
                 .events(compilation.getEvents() != null && !compilation.getEvents().isEmpty() ?
-                        EventMapper.MakeSetEventDto(compilation.getEvents()) : Set.of())
+                        EventMapper.makeSetEventDto(compilation.getEvents()) : Set.of())
 //                        EventMapper.MakeSetEventDto(compilation.getEvents()) : Set.of())
                 .pinned(compilation.getPinned())
                 .title(compilation.getTitle())
