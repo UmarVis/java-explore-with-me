@@ -1,6 +1,5 @@
 package ru.practicum.user.service;
 
-import org.springframework.web.bind.annotation.PathVariable;
 import ru.practicum.user.dto.UserDto;
 import ru.practicum.user.dto.UserDtoAdd;
 

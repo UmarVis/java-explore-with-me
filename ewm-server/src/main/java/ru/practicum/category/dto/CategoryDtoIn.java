@@ -10,6 +10,7 @@ import javax.validation.constraints.NotBlank;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class CategoryDtoIn {
     @NotBlank(message = "Field: name. Error: must not be blank. Value: null")
     String name;

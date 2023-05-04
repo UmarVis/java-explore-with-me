@@ -11,6 +11,7 @@ import javax.validation.constraints.NotBlank;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class UserDtoAdd {
     @NotBlank(message = "Field: name. Error: must not be blank. Value: null")
     @Email

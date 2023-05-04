@@ -18,6 +18,7 @@ import java.util.List;
 @RequestMapping(path = "/admin/users")
 public class UserController {
     private final UserService userService;
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public UserDto add(@Validated @RequestBody UserDtoAdd userDtoAdd) {
@@ -26,8 +27,8 @@ public class UserController {
 
     @GetMapping
     public List<UserDto> getAll(@RequestParam(required = false) List<Long> ids,
-                          @PositiveOrZero @RequestParam(defaultValue = "0") int from,
-                          @Positive @RequestParam(defaultValue = "10") int size) {
+                                @PositiveOrZero @RequestParam(defaultValue = "0") int from,
+                                @Positive @RequestParam(defaultValue = "10") int size) {
         return userService.getAll(ids, from, size);
     }
 

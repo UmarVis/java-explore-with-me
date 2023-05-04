@@ -8,6 +8,7 @@ import java.util.List;
 
 public interface CategoryService {
     CategoryDto add(CategoryDtoIn categoryDtoIn);
+
     CategoryDto update(Long catId, CategoryDtoIn categoryDtoIn);
 
     void delete(@PathVariable Long catId);

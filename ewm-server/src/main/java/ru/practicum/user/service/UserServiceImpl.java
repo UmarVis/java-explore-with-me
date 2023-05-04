@@ -1,6 +1,7 @@
 package ru.practicum.user.service;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -18,6 +19,7 @@ import java.util.List;
 @Service
 @AllArgsConstructor
 @Transactional(readOnly = true)
+@Slf4j
 public class UserServiceImpl implements UserService {
     public static final Sort SORT_BY_ASC = Sort.by(Sort.Direction.ASC, "id");
     private final UserRepository userRepository;
@@ -25,19 +27,22 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public UserDto add(UserDtoAdd userDtoAdd) {
+        log.info("Add new user {}", userDtoAdd);
         User user = UserMapper.makeUser(userDtoAdd);
         return UserMapper.makeUserDto(userRepository.save(user));
     }
 
     @Override
     public List<UserDto> getAll(List<Long> ids, int from, int size) {
-        Pageable pageable = PageRequest.of(from/size, size, SORT_BY_ASC);
+        log.info("Get all users with IDs {}", ids);
+        Pageable pageable = PageRequest.of(from / size, size, SORT_BY_ASC);
         return UserMapper.makeListUserDtos(userRepository.findAllByIdIn(ids, pageable));
     }
 
     @Override
     @Transactional
     public void delete(Long id) {
+        log.info("Delete user with ID {}", id);
         userRepository.findById(id).orElseThrow(()
                 -> new UserNotFoundException("Пользователь с ИД " + id + " не найден"));
         userRepository.deleteById(id);
