@@ -59,7 +59,7 @@ import static ru.practicum.enums.Status.CONFIRMED;
 @Slf4j
 public class EventServiceImpl implements EventService {
     @Value("${app-name}")
-    private String SERVICE_NAME;
+    private String serviceName;
     public static final Sort SORT_BY_ASC = Sort.by(Sort.Direction.ASC, "id");
     private final UserRepository userRepository;
     private final EventRepository eventRepository;
@@ -391,7 +391,7 @@ public class EventServiceImpl implements EventService {
     }
 
     private void createNewHit(String ip, String url) {
-        DtoHitIn endpointHitDto = new DtoHitIn(SERVICE_NAME, url, ip, LocalDateTime.now());
+        DtoHitIn endpointHitDto = new DtoHitIn(serviceName, url, ip, LocalDateTime.now());
 
         statClient.createEndpointHit(endpointHitDto);
     }
