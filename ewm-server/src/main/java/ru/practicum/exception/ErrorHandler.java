@@ -63,10 +63,10 @@ public class ErrorHandler {
         return new ErrorResponse(e.getMessage(), HttpStatus.BAD_REQUEST.getReasonPhrase());
     }
 
-//    @ExceptionHandler
-//    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-//    public ErrorResponse error(final Throwable e) {
-//        log.warn("Error {}", e.getMessage());
-//        return new ErrorResponse(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase());
-//    }
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ErrorResponse error(final Throwable e) {
+        log.warn("Error {}", e.getMessage());
+        return new ErrorResponse(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase());
+    }
 }

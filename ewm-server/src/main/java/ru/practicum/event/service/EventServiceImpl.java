@@ -236,7 +236,6 @@ public class EventServiceImpl implements EventService {
         for (Event event : eventRepository.findAll(specification, pageable)) {
             dtoList.add(EventMapper.makeEventFullDto(event));
         }
-        System.out.println(dtoList);
         return dtoList;
     }
 
