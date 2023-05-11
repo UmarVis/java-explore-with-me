@@ -7,7 +7,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import ru.practicum.event.dto.EventDto;
 import ru.practicum.event.dto.EventDtoFull;
 import ru.practicum.event.service.EventService;
 
@@ -26,16 +25,16 @@ public class EventPublicController {
     private final EventService eventService;
 
     @GetMapping
-    public List<EventDto> getAllPublic(@RequestParam(required = false) String text,
-                                       @RequestParam(required = false) List<Long> categories,
-                                       @RequestParam(required = false) Boolean paid,
-                                       @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime rangeStart,
-                                       @RequestParam(required = false) @FutureOrPresent @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime rangeEnd,
-                                       @RequestParam(defaultValue = "false") boolean onlyAvailable,
-                                       @RequestParam(required = false) String sort,
-                                       @PositiveOrZero @RequestParam(defaultValue = "0") int from,
-                                       @Positive @RequestParam(defaultValue = "10") int size,
-                                       HttpServletRequest request) {
+    public List<EventDtoFull> getAllPublic(@RequestParam(required = false) String text,
+                                           @RequestParam(required = false) List<Long> categories,
+                                           @RequestParam(required = false) Boolean paid,
+                                           @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime rangeStart,
+                                           @RequestParam(required = false) @FutureOrPresent @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime rangeEnd,
+                                           @RequestParam(defaultValue = "false") boolean onlyAvailable,
+                                           @RequestParam(required = false) String sort,
+                                           @PositiveOrZero @RequestParam(defaultValue = "0") int from,
+                                           @Positive @RequestParam(defaultValue = "10") int size,
+                                           HttpServletRequest request) {
         String ip = request.getRemoteAddr();
         String url = request.getRequestURI();
 

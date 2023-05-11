@@ -1,6 +1,7 @@
 package ru.practicum.user.mapper;
 
 import lombok.experimental.UtilityClass;
+import org.springframework.data.domain.Page;
 import ru.practicum.user.dto.UserDto;
 import ru.practicum.user.dto.UserDtoAdd;
 import ru.practicum.user.dto.UserDtoShort;
@@ -11,14 +12,14 @@ import java.util.stream.Collectors;
 
 @UtilityClass
 public class UserMapper {
-    public static User makeUser(UserDtoAdd userDtoAdd) {
+    public User makeUser(UserDtoAdd userDtoAdd) {
         return User.builder()
                 .email(userDtoAdd.getEmail())
                 .name(userDtoAdd.getName())
                 .build();
     }
 
-    public static UserDto makeUserDto(User user) {
+    public UserDto makeUserDto(User user) {
         return UserDto.builder()
                 .email(user.getEmail())
                 .id(user.getId())
@@ -33,7 +34,7 @@ public class UserMapper {
                 .build();
     }
 
-    public static List<UserDto> makeListUserDtos(List<User> users) {
+    public static List<UserDto> makeListUserDtos(Page<User> users) {
         return users.stream().map(UserMapper::makeUserDto).collect(Collectors.toList());
     }
 }

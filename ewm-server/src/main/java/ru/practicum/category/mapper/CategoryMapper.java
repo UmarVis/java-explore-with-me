@@ -11,19 +11,19 @@ import java.util.stream.Collectors;
 
 @UtilityClass
 public class CategoryMapper {
-    public static Category makeCategory(CategoryDtoIn categoryDtoIn) {
+    public Category makeCategory(CategoryDtoIn categoryDtoIn) {
         return Category.builder()
                 .name(categoryDtoIn.getName()).build();
     }
 
-    public static CategoryDto makeCategoryDto(Category category) {
+    public CategoryDto makeCategoryDto(Category category) {
         return CategoryDto.builder()
                 .id(category.getId())
                 .name(category.getName())
                 .build();
     }
 
-    public static List<CategoryDto> makeCategoryDtoList(Page<Category> categories) {
+    public List<CategoryDto> makeCategoryDtoList(Page<Category> categories) {
         return categories.stream().map(CategoryMapper::makeCategoryDto).collect(Collectors.toList());
     }
 }

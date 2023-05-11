@@ -1,6 +1,5 @@
 package ru.practicum.category.service;
 
-import org.springframework.web.bind.annotation.PathVariable;
 import ru.practicum.category.dto.CategoryDto;
 import ru.practicum.category.dto.CategoryDtoIn;
 
@@ -11,7 +10,7 @@ public interface CategoryService {
 
     CategoryDto update(Long catId, CategoryDtoIn categoryDtoIn);
 
-    void delete(@PathVariable Long catId);
+    void delete(Long catId);
 
     List<CategoryDto> getAll(int from, int size);
 

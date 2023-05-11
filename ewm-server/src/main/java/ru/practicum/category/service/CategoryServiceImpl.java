@@ -53,10 +53,11 @@ public class CategoryServiceImpl implements CategoryService {
         categoryRepository.findById(catId).orElseThrow(() ->
                 new CategoryException("Category with id=" + catId + " was not found"));
 
-        if (!eventRepository.findAllByCategoryId(catId).isEmpty()) {
+        if (eventRepository.existsAllByCategoryId(catId)) {
             throw new ConflictException("К категории привязаны события");
+        } else {
+            categoryRepository.deleteById(catId);
         }
-        categoryRepository.deleteById(catId);
     }
 
     @Override

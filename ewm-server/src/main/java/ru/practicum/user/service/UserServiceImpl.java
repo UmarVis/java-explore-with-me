@@ -36,7 +36,8 @@ public class UserServiceImpl implements UserService {
     public List<UserDto> getAll(List<Long> ids, int from, int size) {
         log.info("Get all users with IDs {}", ids);
         Pageable pageable = PageRequest.of(from / size, size, SORT_BY_ASC);
-        return UserMapper.makeListUserDtos(userRepository.findAllByIdIn(ids, pageable));
+        return ids == null || ids.isEmpty() ? UserMapper.makeListUserDtos(userRepository.findAll(pageable))
+                : UserMapper.makeListUserDtos(userRepository.findAllByIdIn(ids, pageable));
     }
 
     @Override

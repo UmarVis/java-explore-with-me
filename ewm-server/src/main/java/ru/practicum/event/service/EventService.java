@@ -28,7 +28,7 @@ public interface EventService {
 
     EventDtoFull updateEventAdmin(Long eventId, EventAdminUpdatedDto eventAdminUpdatedDto);
 
-    List<EventDto> getAllPublic(String text, List<Long> categories, Boolean paid, LocalDateTime rangeStart,
+    List<EventDtoFull> getAllPublic(String text, List<Long> categories, Boolean paid, LocalDateTime rangeStart,
                                 LocalDateTime rangeEnd, Boolean onlyAvailable, Pageable pageable, String ip, String url);
 
     EventDtoFull getByIdPublic(Long id, String ip, String url);

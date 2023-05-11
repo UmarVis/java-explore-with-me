@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.compilation.dto.CompilationDto;
 import ru.practicum.compilation.dto.CompilationDtoIn;
+import ru.practicum.compilation.dto.CompilationDtoUpdate;
 import ru.practicum.compilation.exception.CompilationException;
 import ru.practicum.compilation.mapper.CompilationMapper;
 import ru.practicum.compilation.model.Compilation;
@@ -42,17 +43,19 @@ public class CompilationServiceImpl implements CompilationService {
 
     @Override
     @Transactional
-    public CompilationDto update(CompilationDtoIn compilationDtoIn, Long compId) {
-        log.info("Update compilation {}", compilationDtoIn);
+    public CompilationDto update(CompilationDtoUpdate compilationDtoUpdate, Long compId) {
+        log.info("Update compilation {}", compilationDtoUpdate);
         Compilation compilationUpdate = get(compId);
-        if (compilationDtoIn.getPinned() != null) {
-            compilationUpdate.setPinned(compilationDtoIn.getPinned());
+        if (compilationDtoUpdate.getPinned() != null) {
+            compilationUpdate.setPinned(compilationDtoUpdate.getPinned());
         }
-        if (compilationDtoIn.getTitle() != null && !compilationDtoIn.getTitle().isBlank()) {
-            compilationUpdate.setTitle(compilationDtoIn.getTitle());
+        if (compilationDtoUpdate.getTitle() != null && !compilationDtoUpdate.getTitle().isBlank()) {
+            compilationUpdate.setTitle(compilationDtoUpdate.getTitle());
         }
-        List<Event> eventList = eventRepository.findAllById(compilationDtoIn.getEvents());
-        compilationUpdate.setEvents(new HashSet<>(eventList));
+        if (compilationDtoUpdate.getEvents() != null) {
+            List<Event> eventList = eventRepository.findAllById(compilationDtoUpdate.getEvents());
+            compilationUpdate.setEvents(new HashSet<>(eventList));
+        }
         return CompilationMapper.makeCompilationDto(compilationUpdate);
     }
 
