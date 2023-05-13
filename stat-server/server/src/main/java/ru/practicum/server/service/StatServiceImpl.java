@@ -32,5 +32,6 @@ public class StatServiceImpl implements StatService {
             return unique ? statRepository.findDistinctStat(start, end, uris)
                     : statRepository.findStat(start, end, uris);
         }
+
     }
 }
