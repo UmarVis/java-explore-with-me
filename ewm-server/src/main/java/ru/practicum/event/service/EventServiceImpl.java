@@ -42,7 +42,6 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.persistence.criteria.Subquery;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -51,6 +50,7 @@ import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.counting;
 import static java.util.stream.Collectors.groupingBy;
+import static ru.practicum.constant.Constant.DATE_TIME;
 import static ru.practicum.enums.Status.CONFIRMED;
 
 @Service
@@ -216,13 +216,13 @@ public class EventServiceImpl implements EventService {
         List<EventDtoFull> dtoList = new ArrayList<>();
         Specification<Event> specification = (root, query, builder) -> {
             List<Predicate> predicates = new ArrayList<>();
-            if (users != null) {
+            if (users != null && !users.isEmpty()) {
                 predicates.add(builder.and(root.get("initiator").get("id").in(users)));
             }
-            if (states != null) {
+            if (states != null && !states.isEmpty()) {
                 predicates.add(builder.and(root.get("state").in(states)));
             }
-            if (categories != null) {
+            if (categories != null && !categories.isEmpty()) {
                 predicates.add(builder.and(root.get("category").get("id").in(categories)));
             }
             if (rangeStart != null) {
@@ -352,15 +352,19 @@ public class EventServiceImpl implements EventService {
     }
 
     private List<DtoStatOut> getEventsViewsList(List<Event> events) {
-        DateTimeFormatter customFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         List<String> eventUris = events
                 .stream()
                 .map(e -> String.format("/events/%s", e.getId()))
                 .collect(Collectors.toList());
-        String start = LocalDateTime.now().minusYears(2).format(customFormatter);
-        String end = LocalDateTime.now().format(customFormatter);
+        LocalDateTime start = events.get(0).getPublishedOn();
+        LocalDateTime end = LocalDateTime.now();
+        for (Event event : events) {
+            if (start.isAfter(event.getPublishedOn())) {
+                start = event.getPublishedOn();
+            }
+        }
 
-        List<DtoStatOut> result = statClient.getStatsEndpoint(start, end, eventUris, false);
+        List<DtoStatOut> result = statClient.getStatsEndpoint(start.format(DATE_TIME), end.format(DATE_TIME), eventUris, false);
         log.debug("Получена статистика обращений: {}", result);
         return result;
     }
