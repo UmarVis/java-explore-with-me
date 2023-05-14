@@ -4,13 +4,11 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.springframework.data.annotation.CreatedDate;
 import ru.practicum.category.model.Category;
-import ru.practicum.comments.model.Comment;
 import ru.practicum.enums.State;
 import ru.practicum.user.model.User;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.Set;
 
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
@@ -50,5 +48,5 @@ public class Event {
     @Transient
     Long views = 0L;
     @Transient
-    Set<Comment> comments;
+    Long comments;
 }

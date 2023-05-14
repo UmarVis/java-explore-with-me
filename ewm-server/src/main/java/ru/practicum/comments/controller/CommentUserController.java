@@ -6,6 +6,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.comments.dto.CommentDto;
 import ru.practicum.comments.dto.CommentDtoAdd;
+import ru.practicum.comments.dto.CommentDtoUpdate;
 import ru.practicum.comments.service.CommentService;
 
 import javax.validation.constraints.Positive;
@@ -26,13 +27,13 @@ public class CommentUserController {
 
     @PatchMapping("/{commId}/user/{userId}")
     public CommentDto update(@PathVariable Long commId, @PathVariable Long userId,
-                             @Validated @RequestBody CommentDtoAdd commentDtoAdd) {
-        return commentService.update(commId, userId, commentDtoAdd);
+                             @Validated @RequestBody CommentDtoUpdate commentDtoUpdate) {
+        return commentService.update(commId, userId, commentDtoUpdate);
     }
 
-    @DeleteMapping("/{commId}")
+    @DeleteMapping("/{commId}/user/{userId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable Long commId) {
-        commentService.delete(commId);
+    public void deleteByUser(@PathVariable Long commId, @PathVariable Long userId) {
+        commentService.deleteByUser(commId, userId);
     }
 }

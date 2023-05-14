@@ -88,7 +88,9 @@ public class EventServiceImpl implements EventService {
     public List<EventDto> getByUserId(Long userId, int from, int size) {
         log.info("Get event with user ID {} from {}, size {}", userId, from, size);
         User user = checkUser(userId);
+        List<Event> event = eventRepository.findAllByInitiator(user);
         Pageable pageable = PageRequest.of(from / size, size, SORT_BY_ASC);
+        loadComments(event);
         return EventMapper.makeListEventDto(eventRepository.findAllByInitiator(user, pageable));
     }
 
@@ -97,6 +99,7 @@ public class EventServiceImpl implements EventService {
         log.info("Get by user ID {} and event ID {}", userId, eventId);
         User user = checkUser(userId);
         Event event = checkEvent(eventId);
+        loadComments(List.of(event));
         checkInitiator(userId, event.getInitiator().getId());
         return EventMapper.makeEventFullDto(eventRepository.findAllByInitiatorAndId(user, eventId));
     }
@@ -417,10 +420,16 @@ public class EventServiceImpl implements EventService {
     }
 
     private void loadComments(List<Event> events) {
-        Map<Event, Set<Comment>> comments = commentRepository.findByEventIn(events)
+        Map<Event, Long> comments = commentRepository.findAllByEventIn(events)
                 .stream()
-                .collect(groupingBy(Comment::getEvent, toSet()));
+                .collect(groupingBy(Comment::getEvent, counting()));
 
-        events.forEach(event -> event.setComments(comments.getOrDefault(event, Collections.emptySet())));
+        events.forEach(event -> event.setComments(comments.get(event)));
+
+//        Map<Event, Set<Comment>> comments = commentRepository.findByEventIn(events)
+//                .stream()
+//                .collect(groupingBy(Comment::getEvent, toSet()));
+//
+//        events.forEach(event -> event.setComments(comments.getOrDefault(event, Collections.emptySet())));
     }
 }
