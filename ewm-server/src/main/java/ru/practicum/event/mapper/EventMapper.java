@@ -2,6 +2,9 @@ package ru.practicum.event.mapper;
 
 import lombok.experimental.UtilityClass;
 import ru.practicum.category.mapper.CategoryMapper;
+import ru.practicum.comments.dto.CommentDto;
+import ru.practicum.comments.mapper.CommentMapper;
+import ru.practicum.comments.model.Comment;
 import ru.practicum.enums.State;
 import ru.practicum.event.dto.EventDto;
 import ru.practicum.event.dto.EventDtoFull;
@@ -55,6 +58,7 @@ public class EventMapper {
                 .state(event.getState())
                 .title(event.getTitle())
                 .views(event.getViews())
+                .comments(event.getComments() != null ? makeSetComments(event.getComments()) : null)
                 .build();
     }
 
@@ -90,6 +94,7 @@ public class EventMapper {
                 .state(event.getState())
                 .title(event.getTitle())
                 .views(views)
+                .comments(event.getComments() != null ? makeSetComments(event.getComments()) : null)
                 .build();
     }
 
@@ -107,5 +112,9 @@ public class EventMapper {
 
             return makeEventAndViewsFullDto(event, views != null ? views : 0);
         }).collect(Collectors.toList());
+    }
+
+    public Set<CommentDto> makeSetComments(Set<Comment> comments) {
+        return comments.stream().map(CommentMapper::makeCommentDto).collect(Collectors.toSet());
     }
 }

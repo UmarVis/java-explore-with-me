@@ -13,6 +13,8 @@ import ru.practicum.category.exception.CategoryException;
 import ru.practicum.category.model.Category;
 import ru.practicum.category.repository.CategoryRepository;
 import ru.practicum.client.StatClient;
+import ru.practicum.comments.model.Comment;
+import ru.practicum.comments.repository.CommentRepository;
 import ru.practicum.dto.DtoHitIn;
 import ru.practicum.dto.DtoStatOut;
 import ru.practicum.enums.AdminStateAction;
@@ -42,14 +44,10 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.persistence.criteria.Subquery;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
-import static java.util.stream.Collectors.counting;
-import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.*;
 import static ru.practicum.constant.Constant.DATE_TIME;
 import static ru.practicum.enums.Status.CONFIRMED;
 
@@ -66,6 +64,7 @@ public class EventServiceImpl implements EventService {
     private final CategoryRepository categoryRepository;
     private final LocationRepository locationRepository;
     private final RequestRepository requestRepository;
+    private final CommentRepository commentRepository;
     private final StatClient statClient;
 
     @Override
@@ -337,6 +336,7 @@ public class EventServiceImpl implements EventService {
         List<Event> eventList = eventRepository.findAll(specification, pageable);
         Map<String, Long> eventViewsMap = getEventViewsMap(getEventsViewsList(eventList));
         getConfirmedRequests(eventList);
+        loadComments(eventList);
 
         return EventMapper.makeEventAndViewsDto(eventList, eventViewsMap);
     }
@@ -348,6 +348,7 @@ public class EventServiceImpl implements EventService {
         Event event = getEventByEventIdAndState(id, State.PUBLISHED);
         getConfirmedRequests(List.of(event));
         Map<String, Long> eventViewsMap = getEventViewsMap(getEventsViewsList(List.of(event)));
+        loadComments(List.of(event));
         return EventMapper.makeEventAndViewsDto(List.of(event), eventViewsMap).get(0);
     }
 
@@ -413,5 +414,13 @@ public class EventServiceImpl implements EventService {
         if (!initiatorId.equals(userId)) {
             throw new EventException("Юзер с ИД: " + userId + " не является инициатором");
         }
+    }
+
+    private void loadComments(List<Event> events) {
+        Map<Event, Set<Comment>> comments = commentRepository.findByEventIn(events)
+                .stream()
+                .collect(groupingBy(Comment::getEvent, toSet()));
+
+        events.forEach(event -> event.setComments(comments.getOrDefault(event, Collections.emptySet())));
     }
 }

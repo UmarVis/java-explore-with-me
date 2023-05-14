@@ -4,11 +4,13 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.springframework.data.annotation.CreatedDate;
 import ru.practicum.category.model.Category;
+import ru.practicum.comments.model.Comment;
 import ru.practicum.enums.State;
 import ru.practicum.user.model.User;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
@@ -18,7 +20,6 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 @Table(name = "events")
-@ToString
 public class Event {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -48,4 +49,6 @@ public class Event {
     String title;
     @Transient
     Long views = 0L;
+    @Transient
+    Set<Comment> comments;
 }
