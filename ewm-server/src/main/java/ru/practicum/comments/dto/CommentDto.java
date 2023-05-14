@@ -18,7 +18,7 @@ public class CommentDto {
 
     String text;
 
-    Long event_id;
+    Long eventId;
 
-    Long user_id;
+    Long userId;
 }

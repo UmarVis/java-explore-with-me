@@ -15,7 +15,7 @@ import javax.validation.constraints.Size;
 @ToString
 public class CommentDtoAdd {
     @NotNull
-    Long event_id;
+    Long eventId;
     @NotBlank(message = "Нельзя оставить пустой комментарий")
     @Size(max = 2000)
     String text;

@@ -17,11 +17,11 @@ import javax.validation.constraints.Positive;
 public class CommentUserController {
     private final CommentService commentService;
 
-    @PostMapping("/user/{user_id}")
+    @PostMapping("/user/{userId}")
     @ResponseStatus(HttpStatus.CREATED)
-    public CommentDto add(@PathVariable @Positive Long user_id,
+    public CommentDto add(@PathVariable @Positive Long userId,
                           @RequestBody @Validated CommentDtoAdd commentDtoAdd) {
-        return commentService.add(user_id, commentDtoAdd);
+        return commentService.add(userId, commentDtoAdd);
     }
 
     @PatchMapping("/{commId}/user/{userId}")

@@ -27,8 +27,8 @@ public class CommentMapper {
                 .created(comment.getCreated().format(DATE_TIME))
                 .updated(comment.getUpdated().format(DATE_TIME))
                 .text(comment.getText())
-                .event_id(comment.getEvent().getId())
-                .user_id(comment.getUser().getId())
+                .eventId(comment.getEvent().getId())
+                .userId(comment.getUser().getId())
                 .build();
     }
 

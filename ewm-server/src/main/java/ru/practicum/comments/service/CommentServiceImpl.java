@@ -32,11 +32,11 @@ public class CommentServiceImpl implements CommentService {
     @Transactional
     public CommentDto add(Long userId, CommentDtoAdd commentDtoAdd) {
         User author = checkUser(userId);
-        Event event = checkEvent(commentDtoAdd.getEvent_id());
+        Event event = checkEvent(commentDtoAdd.getEventId());
         Comment newComment = CommentMapper.makeComment(commentDtoAdd);
         newComment.setUser(author);
         newComment.setEvent(event);
-        log.info("Add new comment user ID {} to eventID {} with text {}", userId, commentDtoAdd.getEvent_id(),
+        log.info("Add new comment user ID {} to eventID {} with text {}", userId, commentDtoAdd.getEventId(),
                 commentDtoAdd);
         return CommentMapper.makeCommentDto(commentRepository.save(newComment));
     }
@@ -67,7 +67,7 @@ public class CommentServiceImpl implements CommentService {
         Comment comment = commentRepository.findById(commId).orElseThrow(()
                 -> new NotFoundException("Comment with ID " + commId + " not found"));
         checkUser(userId);
-        checkEvent(commentDtoAdd.getEvent_id());
+        checkEvent(commentDtoAdd.getEventId());
         if (!comment.getUser().getId().equals(userId)) {
             throw new ConflictException("User with ID " + userId + " is not the author of the comment");
         }

@@ -23,13 +23,13 @@ public class CommentAdminController {
         return commentService.getById(commId);
     }
 
-    @GetMapping("/user/{user_id}")
-    public List<CommentDto> getAllByUser(@PathVariable Long user_id) {
-        return commentService.getAllByUser(user_id);
+    @GetMapping("/user/{userId}")
+    public List<CommentDto> getAllByUser(@PathVariable Long userId) {
+        return commentService.getAllByUser(userId);
     }
 
-    @GetMapping("/events/{event_id}")
-    public List<CommentDto> getAllByEventId(@PathVariable Long event_id) {
-        return commentService.getAllByEventId(event_id);
+    @GetMapping("/events/{eventId}")
+    public List<CommentDto> getAllByEventId(@PathVariable Long eventId) {
+        return commentService.getAllByEventId(eventId);
     }
 }
