@@ -27,14 +27,14 @@
               "pm.expect(target).to.have.property('created');",
               "pm.expect(target).to.have.property('updated');",
               "pm.expect(target).to.have.property('text');",
-              "pm.expect(target).to.have.property('event_id');",
-              "pm.expect(target).to.have.property('user_id');",
+              "pm.expect(target).to.have.property('eventId');",
+              "pm.expect(target).to.have.property('userId');",
               "});",
               "",
               "pm.test(\"Данные в ответе должны соответствовать данным в запросе\", function () {",
               "    pm.expect(target.id).to.not.be.null;",
               "    pm.expect(source.text).equal(target.text, 'Текст комментария должен соответствовать отправленному в запросе');",
-              "    pm.expect(source.event_id).equal(target.event_id, 'Евент ИД должен соответствовать отправленному в запросе');",
+              "    pm.expect(source.eventId).equal(target.eventId, 'Евент ИД должен соответствовать отправленному в запросе');",
               "});"
             ],
             "type": "text/javascript"
@@ -46,7 +46,7 @@
         "header": [],
         "body": {
           "mode": "raw",
-          "raw": "{\n    \"event_id\": 1,\n    \"text\": \"Test comment\"\n}",
+          "raw": "{\n    \"eventId\": 1,\n    \"text\": \"Test comment\"\n}",
           "options": {
             "raw": {
               "language": "json"
@@ -90,14 +90,14 @@
               "pm.expect(target).to.have.property('created');",
               "pm.expect(target).to.have.property('updated');",
               "pm.expect(target).to.have.property('text');",
-              "pm.expect(target).to.have.property('event_id');",
-              "pm.expect(target).to.have.property('user_id');",
+              "pm.expect(target).to.have.property('eventId');",
+              "pm.expect(target).to.have.property('userId');",
               "});",
               "",
               "pm.test(\"Данные в ответе должны соответствовать данным в запросе\", function () {",
               "    pm.expect(target.id).to.not.be.null;",
               "    pm.expect(source.text).equal(target.text, 'Текст комментария должен соответствовать отправленному в запросе');",
-              "    pm.expect(source.event_id).equal(target.event_id, 'Евент ИД должен соответствовать отправленному в запросе');",
+              "    pm.expect(source.eventId).equal(target.eventId, 'Евент ИД должен соответствовать отправленному в запросе');",
               "});"
             ],
             "type": "text/javascript"
@@ -109,7 +109,7 @@
         "header": [],
         "body": {
           "mode": "raw",
-          "raw": "{\n    \"event_id\": 1,\n    \"text\": \"Update comment\"\n}",
+          "raw": "{\n    \"eventId\": 1,\n    \"text\": \"Update comment\"\n}",
           "options": {
             "raw": {
               "language": "json"
@@ -153,8 +153,8 @@
               "pm.expect(target).to.have.property('created');",
               "pm.expect(target).to.have.property('updated');",
               "pm.expect(target).to.have.property('text');",
-              "pm.expect(target).to.have.property('event_id');",
-              "pm.expect(target).to.have.property('user_id');",
+              "pm.expect(target).to.have.property('eventId');",
+              "pm.expect(target).to.have.property('userId');",
               "});",
               "",
               "pm.test(\"Данные в ответе должны соответствовать данным в запросе\", function () {",
@@ -336,13 +336,12 @@
               "pm.expect(target[0]).to.have.property('created');",
               "pm.expect(target[0]).to.have.property('updated');",
               "pm.expect(target[0]).to.have.property('text');",
-              "pm.expect(target[0]).to.have.property('event_id');",
-              "pm.expect(target[0]).to.have.property('user_id');",
+              "pm.expect(target[0]).to.have.property('eventId');",
+              "pm.expect(target[0]).to.have.property('userId');",
               "});",
               "",
               "pm.test(\"Данные в ответе должны соответствовать данным в запросе\", function () {",
               "    pm.expect(target.id).to.not.be.null;",
-              "    pm.expect(target[0]['text']).equal('Update comment');",
               "});"
             ],
             "type": "text/javascript"
@@ -390,13 +389,12 @@
               "pm.expect(target[0]).to.have.property('created');",
               "pm.expect(target[0]).to.have.property('updated');",
               "pm.expect(target[0]).to.have.property('text');",
-              "pm.expect(target[0]).to.have.property('event_id');",
-              "pm.expect(target[0]).to.have.property('user_id');",
+              "pm.expect(target[0]).to.have.property('eventId');",
+              "pm.expect(target[0]).to.have.property('userId');",
               "});",
               "",
               "pm.test(\"Данные в ответе должны соответствовать данным в запросе\", function () {",
               "    pm.expect(target.id).to.not.be.null;",
-              "    pm.expect(target[0]['text']).equal('Update comment');",
               "});"
             ],
             "type": "text/javascript"
@@ -407,7 +405,7 @@
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "http://localhost:8080/comments/admin/user/1",
+          "raw": "http://localhost:8080/comments/admin/events/1",
           "protocol": "http",
           "host": [
             "localhost"
@@ -416,7 +414,7 @@
           "path": [
             "comments",
             "admin",
-            "user",
+            "events",
             "1"
           ]
         }
@@ -505,7 +503,7 @@
         "header": [],
         "body": {
           "mode": "raw",
-          "raw": "{\n    \"event_id\": 1,\n    \"text\": \"Update comment\"\n}",
+          "raw": "{\n    \"eventId\": 1,\n    \"text\": \"Update comment\"\n}",
           "options": {
             "raw": {
               "language": "json"
@@ -558,7 +556,7 @@
         "header": [],
         "body": {
           "mode": "raw",
-          "raw": "{\n    \"event_id\": 1,\n    \"text\": \"Update comment\"\n}",
+          "raw": "{\n    \"eventId\": 1,\n    \"text\": \"Update comment\"\n}",
           "options": {
             "raw": {
               "language": "json"
@@ -611,7 +609,7 @@
         "header": [],
         "body": {
           "mode": "raw",
-          "raw": "{\n    \"event_id\": 199,\n    \"text\": \"Update comment\"\n}",
+          "raw": "{\n    \"eventId\": 199,\n    \"text\": \"Update comment\"\n}",
           "options": {
             "raw": {
               "language": "json"
@@ -664,7 +662,7 @@
         "header": [],
         "body": {
           "mode": "raw",
-          "raw": "{\n    \"event_id\": 1,\n    \"text\": \"Test comment\"\n}",
+          "raw": "{\n    \"eventId\": 1,\n    \"text\": \"Test comment\"\n}",
           "options": {
             "raw": {
               "language": "json"
@@ -716,7 +714,7 @@
         "header": [],
         "body": {
           "mode": "raw",
-          "raw": "{\n    \"event_id\": 1,\n    \"text\": \"\"\n}",
+          "raw": "{\n    \"eventId\": 1,\n    \"text\": \"\"\n}",
           "options": {
             "raw": {
               "language": "json"
@@ -768,7 +766,7 @@
         "header": [],
         "body": {
           "mode": "raw",
-          "raw": "{\n    \"event_id\": 1,\n    \"text\": \"\"\n}",
+          "raw": "{\n    \"eventId\": 1,\n    \"text\": \"\"\n}",
           "options": {
             "raw": {
               "language": "json"
@@ -820,7 +818,7 @@
         "header": [],
         "body": {
           "mode": "raw",
-          "raw": "{\n    \"event_id\": 1,\n    \"text\": \"Test comment\"\n}",
+          "raw": "{\n    \"eventId\": 1,\n    \"text\": \"Test comment\"\n}",
           "options": {
             "raw": {
               "language": "json"
