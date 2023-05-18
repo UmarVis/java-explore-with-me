@@ -20,4 +20,6 @@ public interface EventRepository extends JpaRepository<Event, Long> {
     Boolean existsAllByCategoryId(Long id);
 
     Optional<Event> findEventByIdAndState(Long id, State state);
+
+    List<Event> findAllByInitiator(User user);
 }

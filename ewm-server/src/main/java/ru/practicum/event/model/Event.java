@@ -18,7 +18,6 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 @Table(name = "events")
-@ToString
 public class Event {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -48,4 +47,6 @@ public class Event {
     String title;
     @Transient
     Long views = 0L;
+    @Transient
+    Long comments;
 }

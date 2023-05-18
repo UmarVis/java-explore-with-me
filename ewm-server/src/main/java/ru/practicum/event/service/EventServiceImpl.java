@@ -13,6 +13,8 @@ import ru.practicum.category.exception.CategoryException;
 import ru.practicum.category.model.Category;
 import ru.practicum.category.repository.CategoryRepository;
 import ru.practicum.client.StatClient;
+import ru.practicum.comments.model.Comment;
+import ru.practicum.comments.repository.CommentRepository;
 import ru.practicum.dto.DtoHitIn;
 import ru.practicum.dto.DtoStatOut;
 import ru.practicum.enums.AdminStateAction;
@@ -42,14 +44,10 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.persistence.criteria.Subquery;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
-import static java.util.stream.Collectors.counting;
-import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.*;
 import static ru.practicum.constant.Constant.DATE_TIME;
 import static ru.practicum.enums.Status.CONFIRMED;
 
@@ -66,6 +64,7 @@ public class EventServiceImpl implements EventService {
     private final CategoryRepository categoryRepository;
     private final LocationRepository locationRepository;
     private final RequestRepository requestRepository;
+    private final CommentRepository commentRepository;
     private final StatClient statClient;
 
     @Override
@@ -89,7 +88,9 @@ public class EventServiceImpl implements EventService {
     public List<EventDto> getByUserId(Long userId, int from, int size) {
         log.info("Get event with user ID {} from {}, size {}", userId, from, size);
         User user = checkUser(userId);
+        List<Event> event = eventRepository.findAllByInitiator(user);
         Pageable pageable = PageRequest.of(from / size, size, SORT_BY_ASC);
+        loadComments(event);
         return EventMapper.makeListEventDto(eventRepository.findAllByInitiator(user, pageable));
     }
 
@@ -98,6 +99,7 @@ public class EventServiceImpl implements EventService {
         log.info("Get by user ID {} and event ID {}", userId, eventId);
         User user = checkUser(userId);
         Event event = checkEvent(eventId);
+        loadComments(List.of(event));
         checkInitiator(userId, event.getInitiator().getId());
         return EventMapper.makeEventFullDto(eventRepository.findAllByInitiatorAndId(user, eventId));
     }
@@ -337,6 +339,7 @@ public class EventServiceImpl implements EventService {
         List<Event> eventList = eventRepository.findAll(specification, pageable);
         Map<String, Long> eventViewsMap = getEventViewsMap(getEventsViewsList(eventList));
         getConfirmedRequests(eventList);
+        loadComments(eventList);
 
         return EventMapper.makeEventAndViewsDto(eventList, eventViewsMap);
     }
@@ -348,6 +351,7 @@ public class EventServiceImpl implements EventService {
         Event event = getEventByEventIdAndState(id, State.PUBLISHED);
         getConfirmedRequests(List.of(event));
         Map<String, Long> eventViewsMap = getEventViewsMap(getEventsViewsList(List.of(event)));
+        loadComments(List.of(event));
         return EventMapper.makeEventAndViewsDto(List.of(event), eventViewsMap).get(0);
     }
 
@@ -413,5 +417,13 @@ public class EventServiceImpl implements EventService {
         if (!initiatorId.equals(userId)) {
             throw new EventException("Юзер с ИД: " + userId + " не является инициатором");
         }
+    }
+
+    private void loadComments(List<Event> events) {
+        Map<Event, Long> comments = commentRepository.findAllByEventIn(events)
+                .stream()
+                .collect(groupingBy(Comment::getEvent, counting()));
+
+        events.forEach(event -> event.setComments(comments.get(event)));
     }
 }

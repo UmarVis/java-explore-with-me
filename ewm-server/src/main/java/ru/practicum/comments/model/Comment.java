@@ -31,5 +31,4 @@ public class Comment {
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     User user;
-
 }
