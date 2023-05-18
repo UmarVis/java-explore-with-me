@@ -425,11 +425,5 @@ public class EventServiceImpl implements EventService {
                 .collect(groupingBy(Comment::getEvent, counting()));
 
         events.forEach(event -> event.setComments(comments.get(event)));
-
-//        Map<Event, Set<Comment>> comments = commentRepository.findByEventIn(events)
-//                .stream()
-//                .collect(groupingBy(Comment::getEvent, toSet()));
-//
-//        events.forEach(event -> event.setComments(comments.getOrDefault(event, Collections.emptySet())));
     }
 }
